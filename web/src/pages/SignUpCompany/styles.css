@@ -1,0 +1,22 @@
+.container-b {
+  height: 100vh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.content-b {
+  height: 100vh;
+  width: 100%;
+  max-width: 800px;
+  background: #ceb47a;
+  align-items: flex-start;
+}
+
+.container-b main form {
+  flex-direction: row;
+}
+
+.content-b main {
+  padding: 16px;
+}
