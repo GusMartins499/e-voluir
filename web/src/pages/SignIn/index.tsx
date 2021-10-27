@@ -1,6 +1,6 @@
 import React from "react";
 import { FiUser, FiMail, FiLock, FiLogIn } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import Button from "../../components/Button";
@@ -9,16 +9,33 @@ import Input from "../../components/Input";
 import logoImg from "../../assets/logo2.png";
 
 import styles from "../../styles/pages/SignIn.module.scss";
+import { useAuth } from "../../context/auth";
+
+type SignFormData = {
+  email: string;
+  password: string;
+};
 
 const SignIn: React.FC = () => {
-  const { register } = useForm();
+  const { register, handleSubmit } = useForm();
+  const { signIn } = useAuth();
+  const history = useHistory();
+
+  async function handleSignIn(data: SignFormData) {
+    await signIn({ email: data.email, password: data.password });
+    history.push("/");
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <div className={styles.containerForm}>
           <img src={logoImg} alt="e-voluir" />
 
-          <form className={styles.formSignIn}>
+          <form
+            onSubmit={handleSubmit(handleSignIn)}
+            className={styles.formSignIn}
+          >
             <h1>Faça seu Login</h1>
 
             <Input
@@ -30,7 +47,7 @@ const SignIn: React.FC = () => {
             />
             <Input
               register={register}
-              id="senha"
+              id="password"
               icon={FiLock}
               placeholder="Senha"
               type="password"

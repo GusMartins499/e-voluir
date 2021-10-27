@@ -25,7 +25,7 @@ function SignUp() {
     try {
       await api.post('/users', data);
 
-      history.push('/');
+      history.push('/login');
 
     } catch (error) {
 

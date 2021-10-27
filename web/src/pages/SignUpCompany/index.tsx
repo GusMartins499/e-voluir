@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { Map, Marker, TileLayer } from 'react-leaflet';
-import { LeafletMouseEvent } from 'leaflet';
-import { useForm } from 'react-hook-form';
-import api from '../../services/api';
+import React, { useState, useEffect } from "react";
+import { Map, Marker, TileLayer } from "react-leaflet";
+import { LeafletMouseEvent } from "leaflet";
+import { useForm } from "react-hook-form";
+import api from "../../services/api";
 
-import warningIcon from '../../assets/icons/warning.svg';
-import styles from '../../styles/pages/SignUpCompany.module.scss';
+import warningIcon from "../../assets/icons/warning.svg";
+import styles from "../../styles/pages/SignUpCompany.module.scss";
 
-import InputForm from '../../components/InputForm';
-import Header from '../../components/HeaderFormCompany';
-import Textarea from '../../components/Textarea';
-import Select from '../../components/Select';
+import InputForm from "../../components/InputForm";
+import Header from "../../components/HeaderFormCompany";
+import Textarea from "../../components/Textarea";
+import Select from "../../components/Select";
 
-import mapIcon from '../../utils/mapIcon';
+import mapIcon from "../../utils/mapIcon";
+
+import { useLocationUser } from "../../context/UserLocation";
 
 interface SubmitFormData {
   [key: string]: string;
@@ -20,16 +22,17 @@ interface SubmitFormData {
 
 function SignUpCompany() {
   const { register, handleSubmit, watch } = useForm();
-  const [position, setPosition] = useState({ latitude: 0, longitude: 0 })
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
+  const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([
+    0, 0,
+  ]);
   const watchSelect = watch("area_atuacao", "");
 
+  const { latitude, longitude } = useLocationUser();
+
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(position => {
-      const { latitude, longitude } = position.coords;
-      setInitialPosition([latitude, longitude]);
-    })
-  }, []);
+    setInitialPosition([latitude, longitude]);
+  }, [latitude, longitude]);
 
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -43,12 +46,10 @@ function SignUpCompany() {
     const dados = data;
     dados.latitude = String(position.latitude);
     dados.longitude = String(position.longitude);
-    console.log('dados ', dados);
-   try {
-      const response = await api.post('/ngos', { dados });
-      console.log('response ', response);
+    try {
+      await api.post("/ngos", { dados });
     } catch (error) {
-      console.log('error ', error);
+      console.log("error ", error);
     }
   }
 
@@ -62,36 +63,59 @@ function SignUpCompany() {
         <form onSubmit={handleSubmit(handleSubmitForm)}>
           <fieldset>
             <legend>Seus dados</legend>
-            <InputForm id="razao_social" label="Razão social" register={register} />
-            <InputForm id="nome_fantasia" label="Nome fantasia" register={register} />
-            <InputForm id="inscricao_estadual" label="Inscrição estadual" register={register} />
+            <InputForm
+              id="razao_social"
+              label="Razão social"
+              register={register}
+            />
+            <InputForm
+              id="nome_fantasia"
+              label="Nome fantasia"
+              register={register}
+            />
+            <InputForm
+              id="inscricao_estadual"
+              label="Inscrição estadual"
+              register={register}
+            />
             <InputForm id="cnpj" label="CNPJ" register={register} />
             <InputForm id="endereco" label="Endereço" register={register} />
             <InputForm id="bairro" label="Bairro" register={register} />
-            <InputForm id="complemento" label="Complemento" register={register} />
+            <InputForm
+              id="complemento"
+              label="Complemento"
+              register={register}
+            />
             <InputForm id="cep" label="CEP" register={register} />
             <InputForm id="numero" label="Número" register={register} />
             <InputForm id="telefone1" label="Telefone 1" register={register} />
             <InputForm id="telefone2" label="Telefone 2" register={register} />
             <InputForm id="email" label="E-mail" register={register} />
           </fieldset>
-          
+
           <fieldset>
             <legend>Informações Complementares</legend>
-            <Textarea id="bio" label="Informações sobre a organização" register={register} />
+            <Textarea
+              id="bio"
+              label="Informações sobre a organização"
+              register={register}
+            />
             <Select
               register={register}
               id="area_atuacao"
               label="Área de atuação"
               value={watchSelect}
               options={[
-                { value: 'Assistência Social', label: 'Assistência Social' },
-                { value: 'Educação', label: 'Educação' },
-                { value: 'Meio Ambiente', label: 'Meio Ambiente' },
-                { value: 'Promoção do Voluntariado', label: 'Promoção do Voluntariado' },
-                { value: 'Combate a pobreza', label: 'Combate a pobreza' },
-                { value: 'Proteção à animais', label: 'Proteção à animais' },
-                { value: 'Outro', label: 'Outro' },
+                { value: "Assistência Social", label: "Assistência Social" },
+                { value: "Educação", label: "Educação" },
+                { value: "Meio Ambiente", label: "Meio Ambiente" },
+                {
+                  value: "Promoção do Voluntariado",
+                  label: "Promoção do Voluntariado",
+                },
+                { value: "Combate a pobreza", label: "Combate a pobreza" },
+                { value: "Proteção à animais", label: "Proteção à animais" },
+                { value: "Outro", label: "Outro" },
               ]}
             />
           </fieldset>
@@ -99,7 +123,7 @@ function SignUpCompany() {
             <legend>Localização</legend>
             <Map
               center={initialPosition}
-              style={{ width: '100%', height: 280 }}
+              style={{ width: "100%", height: 280 }}
               zoom={15}
               onclick={handleMapClick}
             >
@@ -118,12 +142,10 @@ function SignUpCompany() {
           <footer>
             <p>
               <img src={warningIcon} alt="Aviso importante" />
-                Importante ! <br />
-                Preencha todos os dados
-              </p>
-            <button type="submit">
-              Salvar cadastro
-              </button>
+              Importante ! <br />
+              Preencha todos os dados
+            </p>
+            <button type="submit">Salvar cadastro</button>
           </footer>
         </form>
       </main>
