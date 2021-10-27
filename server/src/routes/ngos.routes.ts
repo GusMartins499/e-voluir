@@ -1,12 +1,14 @@
-import { Router } from 'express';
-import { getRepository } from 'typeorm';
-import NGO from '../models/NGO';
+import { Router } from "express";
+import { getRepository } from "typeorm";
+import NGO from "../models/NGO";
 
-import CreateNGOService from '../services/CreateNGOService';
+import authenticated from '../middlewares/authenticated';
+
+import CreateNGOService from "../services/CreateNGOService";
 
 const ngosRouter = Router();
 
-ngosRouter.post('/', async (request, response) => {
+ngosRouter.post("/", async (request, response) => {
   const {
     razao_social,
     nome_fantasia,
@@ -23,7 +25,7 @@ ngosRouter.post('/', async (request, response) => {
     bio,
     area_atuacao,
     latitude,
-    longitude
+    longitude,
   } = request.body.dados;
   const createNGO = new CreateNGOService();
   const ngo = await createNGO.execute({
@@ -42,27 +44,62 @@ ngosRouter.post('/', async (request, response) => {
     bio,
     area_atuacao,
     latitude,
-    longitude
+    longitude,
   });
   return response.status(201).json(ngo);
 });
 
-ngosRouter.get('/map', async (request, response) => {
+ngosRouter.get("/map", authenticated, async (request, response) => {
   const ngoRepository = getRepository(NGO);
-  const ngos = await ngoRepository.createQueryBuilder('ngos')
-  .select(['ngos.id','ngos.nome_fantasia', 'ngos.latitude', 'ngos.longitude'])
-  .getMany()
+  const ngos = await ngoRepository
+    .createQueryBuilder("ngos")
+    .select([
+      "ngos.id",
+      "ngos.nome_fantasia",
+      "ngos.latitude",
+      "ngos.longitude",
+    ])
+    .getMany();
   return response.status(200).json(ngos);
-/*   const ngoRepository = getRepository(NGO);
+  /*   const ngoRepository = getRepository(NGO);
   const ngos = await ngoRepository.find();
   return response.status(200).json(ngos); */
 });
 
-ngosRouter.get('/:id', async (request, response) => {
+ngosRouter.get("/all", authenticated, async (request, response) => {
+  const ngoRepository = getRepository(NGO);
+  const ngos = await ngoRepository.find();
+  return response.status(200).json(ngos);
+});
+
+ngosRouter.get("/filter", authenticated, async (request, response) => {
+  const area_atuacao = request.query.atuacao;
+  const ngoRepository = getRepository(NGO);
+  if (area_atuacao !== "") {
+    const ngos = await ngoRepository
+      .createQueryBuilder("ngos")
+      .select([
+        "ngos.nome_fantasia",
+        "ngos.area_atuacao",
+        "ngos.bio",
+        "ngos.telefone1",
+        "ngos.id",
+      ])
+      .where("ngos.area_atuacao = :area_atuacao", { area_atuacao })
+      .getMany();
+    return response.status(200).json(ngos);
+  } else {
+    const ngoRepository = getRepository(NGO);
+    const ngos = await ngoRepository.find();
+    return response.status(200).json(ngos);
+  }
+});
+
+ngosRouter.get("/:id", authenticated, async (request, response) => {
   const idNgo = request.params.id;
   const ngoRepository = getRepository(NGO);
   const ngo = await ngoRepository.findOne({ id: idNgo });
-  return response.status(200).json(ngo); 
+  return response.status(200).json(ngo);
 });
 
 export default ngosRouter;
