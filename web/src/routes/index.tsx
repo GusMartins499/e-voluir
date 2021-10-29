@@ -7,7 +7,7 @@ import SignUp from "../pages/SignUp";
 import SignUpCompany from "../pages/SignUpCompany";
 import Home from "../pages/Home";
 import PageMap from "../pages/Map";
-import NgoDetail from "../pages/Ngo";
+import Donation from "../pages/Donation";
 
 function Routes() {
   return (
@@ -17,7 +17,7 @@ function Routes() {
       <Route path="/signupcompany" component={SignUpCompany} />
 
       <Route path="/map" isPrivate component={PageMap} />
-      <Route path="/ngos/:id" isPrivate component={NgoDetail} />
+      <Route path="/donation/ngo/:id" isPrivate component={Donation} />
       <Route exact path="/" isPrivate component={Home} />
     </Switch>
   );

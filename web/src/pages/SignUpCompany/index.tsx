@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import { Map, Marker, TileLayer } from "react-leaflet";
 import { LeafletMouseEvent } from "leaflet";
 import { useForm } from "react-hook-form";
@@ -15,12 +16,14 @@ import Select from "../../components/Select";
 import mapIcon from "../../utils/mapIcon";
 
 import { useLocationUser } from "../../context/UserLocation";
+import { notifyError, notifySuccess } from "../../components/Toast";
 
 interface SubmitFormData {
   [key: string]: string;
 }
 
-function SignUpCompany() {
+const SignUpCompany: React.FC = () => {
+  const history = useHistory();
   const { register, handleSubmit, watch } = useForm();
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [initialPosition, setInitialPosition] = useState<[number, number]>([
@@ -47,9 +50,13 @@ function SignUpCompany() {
     dados.latitude = String(position.latitude);
     dados.longitude = String(position.longitude);
     try {
-      await api.post("/ngos", { dados });
+      await api.post("/ngos", { dados }).catch((er) => {
+        notifyError(`${er.response.data.message}`);
+      });
+      notifySuccess("Organização cadastrada com sucesso !");
+      history.push("/login");
     } catch (error) {
-      console.log("error ", error);
+      notifyError("Entre em contato com o desenvolvedor");
     }
   }
 
@@ -79,6 +86,7 @@ function SignUpCompany() {
               register={register}
             />
             <InputForm id="cnpj" label="CNPJ" register={register} />
+            <InputForm id="cidade" label="Cidade" register={register} />
             <InputForm id="endereco" label="Endereço" register={register} />
             <InputForm id="bairro" label="Bairro" register={register} />
             <InputForm
@@ -91,6 +99,11 @@ function SignUpCompany() {
             <InputForm id="telefone1" label="Telefone 1" register={register} />
             <InputForm id="telefone2" label="Telefone 2" register={register} />
             <InputForm id="email" label="E-mail" register={register} />
+            <InputForm
+              id="chave_pix"
+              label="Chave PIX ALEATÓRIA"
+              register={register}
+            />
           </fieldset>
 
           <fieldset>
@@ -151,6 +164,6 @@ function SignUpCompany() {
       </main>
     </div>
   );
-}
+};
 
 export default SignUpCompany;

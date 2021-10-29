@@ -59,8 +59,8 @@ function PageMap() {
                   className="map-popup"
                 >
                   {ngo.nome_fantasia}
-                  <Link to={`/ngos/${ngo.id}`}>
-                    <FiArrowRight size={32} color="#fff" />
+                  <Link to={`/donation/ngo/${ngo.id}`}>
+                    <FiArrowRight size={32} color="#000" />
                   </Link>
                 </Popup>
               </Marker>

@@ -44,16 +44,16 @@ const Home: React.FC = () => {
             label="Área de atuação"
             options={[
               { value: "", label: "" },
-              { value: "Assistência Social", label: "Assistência Social" },
-              { value: "Educação", label: "Educação" },
-              { value: "Meio Ambiente", label: "Meio Ambiente" },
+              { value: "assistencia_social", label: "Assistência Social" },
+              { value: "educacao", label: "Educação" },
+              { value: "meio_ambiente", label: "Meio Ambiente" },
               {
-                value: "Promoção do Voluntariado",
+                value: "promocao_voluntariado",
                 label: "Promoção do Voluntariado",
               },
-              { value: "Combate a pobreza", label: "Combate a pobreza" },
-              { value: "Proteção à animais", label: "Proteção à animais" },
-              { value: "Outro", label: "Outro" },
+              { value: "combate_pobreza", label: "Combate a pobreza" },
+              { value: "protecao_animais", label: "Proteção à animais" },
+              { value: "outro", label: "Outro" },
             ]}
           />
         </div>
@@ -68,6 +68,7 @@ const Home: React.FC = () => {
               area_atuacao={item.area_atuacao}
               bio={item.bio}
               telefone={item.telefone1}
+              id={item.id}
             />
           );
         })}

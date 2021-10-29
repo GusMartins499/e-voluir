@@ -1,10 +1,11 @@
 import React from "react";
-import { FiUser, FiMail, FiLock, FiLogIn } from "react-icons/fi";
+import { FiMail, FiLock, FiLogIn } from "react-icons/fi";
 import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { notifyError } from "../../components/Toast";
 
 import logoImg from "../../assets/logo2.png";
 
@@ -22,8 +23,16 @@ const SignIn: React.FC = () => {
   const history = useHistory();
 
   async function handleSignIn(data: SignFormData) {
-    await signIn({ email: data.email, password: data.password });
-    history.push("/");
+    try {
+      await signIn({ email: data.email, password: data.password }).catch(
+        (er) => {
+          notifyError(er.response.data.message);
+        }
+      );
+      history.push("/");
+    } catch (error) {
+      notifyError("Entre em contato com o desenvolvedor");
+    }
   }
 
   return (

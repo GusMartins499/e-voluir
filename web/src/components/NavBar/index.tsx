@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { FiCode, FiMenu, FiX } from "react-icons/fi";
+import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { MenuItems } from "./MenuItems";
 
+import LogoIMG from '../../assets/logo2.png';
+
 import styles from "../../styles/components/NavBar.module.scss";
-import { Button } from "./ButtonNavBar";
+
 import { useAuth } from "../../context/auth";
 
-function NavBar() {
+const NavBar: React.FC = () => {
   const [active, setActive] = useState(false);
   const { signOut } = useAuth();
 
@@ -16,7 +18,7 @@ function NavBar() {
   return (
     <nav className={styles.navbarItems}>
       <h1 className={styles.navbarLogo}>
-        React <FiCode />
+        <img src={LogoIMG} alt="e-voluir" />
       </h1>
       <div className={styles.menuIcon}>
         {active ? (
