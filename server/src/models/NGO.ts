@@ -27,6 +27,9 @@ class NGOS {
   endereco: string;
 
   @Column()
+  cidade: string;
+
+  @Column()
   bairro: string;
 
   @Column()
@@ -46,6 +49,9 @@ class NGOS {
 
   @Column()
   email: string;
+
+  @Column()
+  chave_pix: string;
 
   @Column()
   bio: string;

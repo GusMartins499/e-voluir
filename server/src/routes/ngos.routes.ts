@@ -2,7 +2,7 @@ import { Router } from "express";
 import { getRepository } from "typeorm";
 import NGO from "../models/NGO";
 
-import authenticated from '../middlewares/authenticated';
+import authenticated from "../middlewares/authenticated";
 
 import CreateNGOService from "../services/CreateNGOService";
 
@@ -15,6 +15,7 @@ ngosRouter.post("/", async (request, response) => {
     inscricao_estadual,
     cnpj,
     endereco,
+    cidade,
     bairro,
     complemento,
     cep,
@@ -22,6 +23,7 @@ ngosRouter.post("/", async (request, response) => {
     telefone1,
     telefone2,
     email,
+    chave_pix,
     bio,
     area_atuacao,
     latitude,
@@ -34,6 +36,7 @@ ngosRouter.post("/", async (request, response) => {
     inscricao_estadual,
     cnpj,
     endereco,
+    cidade,
     bairro,
     complemento,
     cep,
@@ -41,6 +44,7 @@ ngosRouter.post("/", async (request, response) => {
     telefone1,
     telefone2,
     email,
+    chave_pix,
     bio,
     area_atuacao,
     latitude,
