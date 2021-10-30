@@ -6,6 +6,7 @@ import Select from "../../components/Select2";
 
 import styles from "../../styles/pages/Home.module.scss";
 import api from "../../services/api";
+import { notifyError } from "../../components/Toast";
 
 interface ResponseFilter {
   area_atuacao: string;
@@ -22,13 +23,17 @@ const Home: React.FC = () => {
   async function handleListFilter() {
     try {
       const token = localStorage.getItem("@Evoluir:token");
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      const response = await api.get<ResponseFilter[]>(
-        `/ngos/filter?atuacao=${atuacao}`
-      );
-      setLista(response.data);
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      await api
+        .get<ResponseFilter[]>(`/ngos/filter?atuacao=${atuacao}`)
+        .then((lista) => {
+          setLista(lista.data);
+        })
+        .catch((er) => {
+          notifyError(`${er.response.data.message}`);
+        });
     } catch (error) {
-      console.log("error ", error);
+      notifyError("Entre em contato com o desenvolvedor");
     }
   }
 

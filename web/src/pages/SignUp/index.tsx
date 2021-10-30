@@ -2,6 +2,9 @@ import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import { FiUser, FiMail, FiLock, FiArrowLeft } from "react-icons/fi";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { ptForm } from "yup-locale-pt";
+import * as yup from "yup";
 
 import api from "../../services/api";
 
@@ -17,12 +20,26 @@ interface SignUpFormData {
   password: string;
 }
 
+yup.setLocale(ptForm);
+const schema = yup.object({
+  name: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().min(6).required(),
+});
+
 const SignUp: React.FC = () => {
   const history = useHistory();
-  const { register, handleSubmit } = useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
-  const testeForm = useCallback(
+  const hadleCreateAccount = useCallback(
     async (data: SignUpFormData) => {
+      await schema.validate(data, { abortEarly: false });
       try {
         await api.post("/users", data).catch((er) => {
           notifyError(er.response.data.message);
@@ -42,7 +59,7 @@ const SignUp: React.FC = () => {
       <div className={styles.content}>
         <div className={styles.containerForm}>
           <form
-            onSubmit={handleSubmit(testeForm)}
+            onSubmit={handleSubmit(hadleCreateAccount)}
             className={styles.formSignUp}
           >
             <h1>Faça seu cadastro</h1>
@@ -53,6 +70,7 @@ const SignUp: React.FC = () => {
               type="text"
               register={register}
             />
+            {errors.name && <p>{errors.name.message}</p>}
             <Input
               id="email"
               icon={FiMail}
@@ -60,6 +78,7 @@ const SignUp: React.FC = () => {
               type="email"
               register={register}
             />
+            {errors.email && <p>{errors.email.message}</p>}
             <Input
               id="password"
               icon={FiLock}
@@ -67,8 +86,9 @@ const SignUp: React.FC = () => {
               type="password"
               register={register}
             />
+            {errors.password && <p>{errors.password.message}</p>}
             <Button type="submit">Cadastrar</Button>
-            <Link to="/">
+            <Link to="/login">
               <FiArrowLeft />
               Voltar para Login
             </Link>

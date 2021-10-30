@@ -18,9 +18,12 @@ interface Ngos {
   longitude: number;
 }
 
-function PageMap() {
+const PageMap: React.FC = () => {
   const { latitude, longitude } = useLocationUser();
   const [ngos, setNgos] = useState<Ngos[]>([]);
+
+  const { latitude: InitialPositionLat, longitude: InitialPositionLong } =
+    useLocationUser();
 
   useEffect(() => {
     ngosMap();
@@ -59,9 +62,14 @@ function PageMap() {
                   className="map-popup"
                 >
                   {ngo.nome_fantasia}
-                  <Link to={`/donation/ngo/${ngo.id}`}>
-                    <FiArrowRight size={32} color="#000" />
-                  </Link>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://www.google.com/maps/dir/?api=1&origin=${InitialPositionLat},${InitialPositionLong}&destination=${ngo.latitude},${ngo.longitude}`}
+                    title="Ver no google maps"
+                  >
+                    <FiArrowRight size={32} color="#fff" />
+                  </a>
                 </Popup>
               </Marker>
             );
@@ -70,6 +78,6 @@ function PageMap() {
       </div>
     </>
   );
-}
+};
 
 export default PageMap;

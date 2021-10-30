@@ -1,4 +1,5 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { FiArrowLeft } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,13 +8,12 @@ import * as yup from "yup";
 import styles from "../../styles/pages/Donation.module.scss";
 
 import { PIX } from "gpix/dist";
-
 import HeaderFormCompany from "../../components/HeaderFormCompany";
 import InputForm from "../../components/InputForm";
 
 import DefaultQRCode from "../../assets/qrcode.png";
+
 import api from "../../services/api";
-import { FiArrowLeft } from "react-icons/fi";
 
 type responseNGO = {
   razao_social: string;
@@ -36,7 +36,6 @@ const Donation: React.FC = () => {
   const { id: UUIDNGO } = useParams<{ id: string }>();
   const [qrcode, setQrcode] = useState<string | null>("");
   const [ngo, setNgo] = useState({} as responseNGO);
-  const [valorDoacao, setValorDoacao] = useState(1);
 
   const {
     handleSubmit,
@@ -67,8 +66,6 @@ const Donation: React.FC = () => {
   }
 
   async function handleQRCode(data: any) {
-    console.log("data ", data);
-
     const pix = PIX.static()
       .setReceiverName(ngo.nome_fantasia)
       .setReceiverCity(ngo.cidade)
@@ -124,7 +121,7 @@ const Donation: React.FC = () => {
             )}
             <div>
               <button type="submit">Gerar QRCODE</button>
-              <Link to="/">
+              <Link to="/" >
                 <FiArrowLeft />
                 Retornar para tela anterior
               </Link>
