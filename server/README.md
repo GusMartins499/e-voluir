@@ -23,3 +23,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - Instale as dependências com `yarn` ou `npm i`;
 - Executa as migrations com `yarn typeorm migration:run` ou `npx typeorm migration:run`;
 - Inicie o servidor com `yarn dev`;
+
+
+## 🔥 EndPoints
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=e-voluir&uri=ttps%3A%2F%2Fraw.githubusercontent.com%2FGusMartins499%2Fe-voluir%2Fmaster%2Fserver%2FInsomnia_2021-11-25.json%3Ftoken%3DAKM7UVLEBYJTHS5O7ZRZCK3BT55BA)
