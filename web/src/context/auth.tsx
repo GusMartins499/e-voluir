@@ -11,7 +11,12 @@ type AuthContextData = {
     id: string;
     name: string;
     email: string;
-  };
+  } | null;
+  ngo: {
+    id: string;
+    cnpj: string;
+    email: string;
+  } | null;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 };
@@ -26,7 +31,12 @@ type AuthState = {
     id: string;
     email: string;
     name: string;
-  };
+  } | null;
+  ngo: {
+    id: string;
+    cnpj: string;
+    email: string;
+  } | null;
 };
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -35,32 +45,42 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [data, setData] = useState<AuthState>(() => {
     const token = localStorage.getItem("@Evoluir:token");
     const user = localStorage.getItem("@Evoluir:user");
+    const ngo = localStorage.getItem("@Evoluir:ngo");
 
     if (token && user) {
-      return { token, user: JSON.parse(user) };
+      return { token, user: JSON.parse(user), ngo: null };
+    }
+    if (token && ngo) {
+      return { token, ngo: JSON.parse(ngo), user: null };
     }
     return {} as AuthState;
   });
 
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post("/session", { email, password });
-    const { token, user } = response.data;
+    const { token, user, ngo } = response.data;
 
     localStorage.setItem("@Evoluir:token", token);
-    localStorage.setItem("@Evoluir:user", JSON.stringify(user));
+    if (user) {
+      localStorage.setItem("@Evoluir:user", JSON.stringify(user));
+    }
+    if (ngo) {
+      localStorage.setItem("@Evoluir:ngo", JSON.stringify(ngo));
+    }
 
-    setData({ token, user });
+    setData({ token, user, ngo });
   }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem("@Evoluir:token");
     localStorage.removeItem("@Evoluir:user");
+    localStorage.removeItem("@Evoluir:ngo");
 
     setData({} as AuthState);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, ngo: data.ngo, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

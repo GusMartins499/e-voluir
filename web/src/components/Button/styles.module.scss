@@ -1,4 +1,4 @@
-.button-container button {
+.buttonContainer button {
   background: #c1a067;
   height: 56px;
   border-radius: 10px;
@@ -9,8 +9,8 @@
   font-weight: 600;
   margin-top: 16px;
   transition: filter 0.2s;
-}
 
-.button-container button:hover {
-  filter: brightness(0.9);
+  &:hover {
+    filter: brightness(0.9);
+  }
 }

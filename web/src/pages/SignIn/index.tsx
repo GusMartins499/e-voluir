@@ -7,9 +7,10 @@ import Button from "../../components/Button";
 import Input from "../../components/Input";
 import { notifyError } from "../../components/Toast";
 
-import logoImg from "../../assets/logo2.png";
+import logoImg from "../../assets/logo.png";
 
-import styles from "../../styles/pages/SignIn.module.scss";
+import styles from "./styles.module.scss";
+
 import { useAuth } from "../../context/auth";
 
 type SignFormData = {
@@ -62,7 +63,6 @@ const SignIn: React.FC = () => {
               type="password"
             />
             <Button type="submit">Entrar</Button>
-            <a href="forgot">Esqueci minha senha</a>
           </form>
 
           <div className={styles.footer}>

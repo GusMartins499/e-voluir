@@ -8,7 +8,7 @@ import * as yup from "yup";
 
 import api from "../../services/api";
 
-import styles from "../../styles/pages/SignUp.module.scss";
+import styles from "./styles.module.scss";
 
 import Input from "../../components/Input";
 import Button from "../../components/Button";

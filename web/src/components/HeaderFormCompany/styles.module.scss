@@ -11,39 +11,35 @@
   justify-content: space-between;
   align-items: center;
   color: #000;
-  padding: 1.6rem 0;
+  padding: 25px 0;
   a {
-    height: 3.2rem;
+    height: 51px;
     transition: opacity 0.2s;
     &:hover {
       opacity: 0.6;
     }
   }
   > img {
-    height: 1.6rem;
+    height: 25px;
   }
 }
-
-/* .pageHeader .topBarContainer > img {
-  height: 1.6rem;
-} */
 
 .headerContent {
   width: 90%;
   margin: 0 auto;
   position: relative;
-  margin: 3.2rem auto;
+  margin: 51px auto;
   strong {
-    font: 600 2rem Open Sans;
-    line-height: 2.6rem;
-    color: #000;
+    font: 600 32px Open Sans;
+    line-height: 41px;
+    color: #fff;
   }
   p {
-    max-width: 30rem;
-    font-size: 1rem;
-    line-height: 1.6rem;
-    color: #000;
-    margin-top: .4rem;
+    max-width: 480px;
+    font-size: 16px;
+    line-height: 25px;
+    color: #fff;
+    margin-top: 6px;
   }
 }
 

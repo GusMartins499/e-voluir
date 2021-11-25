@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes } from 'react';
 import { IconBaseProps } from 'react-icons';
 
-import './styles.css';
+import styles from "./styles.module.scss";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
@@ -11,7 +11,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ id, icon: Icon, register, ...rest }) => {
   return (
-    <div className="input-container">
+    <div className={styles.inputContainer}>
       {Icon && <Icon size={20} color="#fff" />}
       <input id={id} name={id} {...register(`${id}`)} {...rest} />
     </div>

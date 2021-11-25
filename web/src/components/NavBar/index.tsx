@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
+
 import { MenuItems } from "./MenuItems";
 
-import LogoIMG from '../../assets/logo2.png';
+import LogoIMG from '../../assets/logo.png';
 
-import styles from "../../styles/components/NavBar.module.scss";
+import styles from "./styles.module.scss";
 
 import { useAuth } from "../../context/auth";
 
 const NavBar: React.FC = () => {
   const [active, setActive] = useState(false);
-  const { signOut } = useAuth();
+  const { signOut, ngo } = useAuth();
 
   const handleToggleActive = () => setActive(!active);
 
@@ -45,7 +46,8 @@ const NavBar: React.FC = () => {
                 </Link>
               ) : (
                 <Link
-                  to={`${item.url}`}
+                  hidden={item.title === 'Meus dados' && !ngo}
+                  to={item.title === 'Meus dados' ? `ngos/account/${ngo?.id}` : `${item.url}`}
                   className={
                     item.cName === "navLinks"
                       ? styles.navLinks

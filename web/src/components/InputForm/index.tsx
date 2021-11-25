@@ -1,6 +1,6 @@
 import React, { InputHTMLAttributes } from 'react';
 
-import styles from '../../styles/components/InputForm.module.scss';
+import styles from './styles.module.scss';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;

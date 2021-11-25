@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
-import logoImg from '../../assets/logo-japa.png';
+import logoImg from '../../assets/logo-grande.png';
 
-import styles from '../../styles/components/HeaderFormCompany.module.scss';
+import styles from './styles.module.scss';
 
 interface PageHeaderProps {
   title: string;

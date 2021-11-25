@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { getRepository } from "typeorm";
-import NGO from "../models/NGO";
+import NGO from "../models/Ngo";
 
 import authenticated from "../middlewares/authenticated";
 
-import CreateNGOService from "../services/CreateNGOService";
+import CreateNGOService from "../services/CreateNgoService";
+import UpdateNGOService from "../services/UpdateNgoService";
 
 const ngosRouter = Router();
 
@@ -23,6 +24,7 @@ ngosRouter.post("/", async (request, response) => {
     telefone1,
     telefone2,
     email,
+    senha,
     chave_pix,
     bio,
     area_atuacao,
@@ -44,12 +46,14 @@ ngosRouter.post("/", async (request, response) => {
     telefone1,
     telefone2,
     email,
+    senha,
     chave_pix,
     bio,
     area_atuacao,
     latitude,
     longitude,
   });
+
   return response.status(201).json(ngo);
 });
 
@@ -64,15 +68,14 @@ ngosRouter.get("/map", authenticated, async (request, response) => {
       "ngos.longitude",
     ])
     .getMany();
+
   return response.status(200).json(ngos);
-  /*   const ngoRepository = getRepository(NGO);
-  const ngos = await ngoRepository.find();
-  return response.status(200).json(ngos); */
 });
 
 ngosRouter.get("/all", authenticated, async (request, response) => {
   const ngoRepository = getRepository(NGO);
   const ngos = await ngoRepository.find();
+
   return response.status(200).json(ngos);
 });
 
@@ -91,6 +94,7 @@ ngosRouter.get("/filter", authenticated, async (request, response) => {
       ])
       .where("ngos.area_atuacao = :area_atuacao", { area_atuacao })
       .getMany();
+
     return response.status(200).json(ngos);
   } else {
     const ngoRepository = getRepository(NGO);
@@ -99,11 +103,22 @@ ngosRouter.get("/filter", authenticated, async (request, response) => {
   }
 });
 
-ngosRouter.get("/:id", authenticated, async (request, response) => {
+ngosRouter.get("/account/ngo/:id", authenticated, async (request, response) => {
   const idNgo = request.params.id;
   const ngoRepository = getRepository(NGO);
   const ngo = await ngoRepository.findOne({ id: idNgo });
+  delete ngo?.senha;
+  
   return response.status(200).json(ngo);
 });
+
+ngosRouter.put("/ngo/update/:id", authenticated, async (request, response) => {
+  const id = request.params.id;
+  const { dados } = request.body;
+  const updateNGO = new UpdateNGOService();
+  const updatedNgo = await updateNGO.execute({id, dados});
+
+  return response.status(200).json(updatedNgo);
+})
 
 export default ngosRouter;

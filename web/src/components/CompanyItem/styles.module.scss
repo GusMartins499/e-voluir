@@ -1,7 +1,6 @@
 .item {
   width: 100%;
   background: #fff;
-  /* border: 1px solid var(--color-line-in-white); */
   border-radius: 0.8rem;
   margin-top: 2.4rem;
   overflow: hidden;
@@ -10,14 +9,7 @@
     display: flex;
     align-items: center;
 
-    img {
-      width: 8rem;
-      height: 8rem;
-      border-radius: 50%;
-    }
-
     div {
-      margin-left: 2.4rem;
       strong {
         font: 700 2.4rem 'Open Sans';
         display: block;
@@ -40,7 +32,6 @@
   footer {
     padding: 3.2rem 2rem;
     background: #fff;;
-    /* border-top: 1px solid var(--color-line-in-white); */
     margin-top: 3.2rem;
     display: flex;
     align-items: center;
@@ -65,10 +56,10 @@
       justify-content: space-evenly;
       transition: 0.2s;
       text-decoration: none;
+      transition: filter 0.2s;
+      &:hover {
+        filter: brightness(0.9);
+      }
     }
   }
 }
-
-/* .teacher-item footer a:hover {
-  background: var(--color-secundary-dark);
-} */

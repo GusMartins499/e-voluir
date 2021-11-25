@@ -1,5 +1,6 @@
 import { getRepository } from "typeorm";
-import NGO from "../models/NGO";
+import { hash } from 'bcryptjs';
+import NGO from "../models/Ngo";
 
 import AppError from "../erros/AppError";
 
@@ -17,6 +18,7 @@ interface Request {
   telefone1: string;
   telefone2: string;
   email: string;
+  senha: string;
   chave_pix: string;
   bio: string;
   area_atuacao: string;
@@ -39,6 +41,7 @@ class CreateNGOService {
     telefone1,
     telefone2,
     email,
+    senha,
     chave_pix,
     bio,
     area_atuacao,
@@ -53,6 +56,7 @@ class CreateNGOService {
       throw new AppError("Organization already exists", 410);
     }
 
+    const hashPassword = await hash(senha, 8);
     const Ngo = ngoRepository.create({
       razao_social,
       nome_fantasia,
@@ -67,6 +71,7 @@ class CreateNGOService {
       telefone1,
       telefone2,
       email,
+      senha: hashPassword,
       chave_pix,
       bio,
       area_atuacao,

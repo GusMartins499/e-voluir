@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-class NGOS {
+class Ngos {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -51,6 +51,9 @@ class NGOS {
   email: string;
 
   @Column()
+  senha: string;
+
+  @Column()
   chave_pix: string;
 
   @Column()
@@ -72,4 +75,4 @@ class NGOS {
   updated_at: Date;
 }
 
-export default NGOS;
+export default Ngos;

@@ -1,6 +1,6 @@
 import React, { SelectHTMLAttributes } from "react";
 
-import styles from "../../styles/components/Select.module.scss";
+import styles from "./styles.module.scss";
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   id: string;

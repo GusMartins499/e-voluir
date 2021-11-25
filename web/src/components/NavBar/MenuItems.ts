@@ -10,6 +10,11 @@ export const MenuItems = [
     cName: "navLinks",
   },
   {
+    title: "Meus dados",
+    url: "/ngos/account",
+    cName: "navLinksMobile",
+  },
+  {
     title: "LogOut",
     url: "#",
     cName: "navLinksMobile",

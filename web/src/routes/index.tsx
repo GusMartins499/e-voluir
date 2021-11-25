@@ -8,6 +8,7 @@ import SignUpCompany from "../pages/SignUpCompany";
 import Home from "../pages/Home";
 import PageMap from "../pages/Map";
 import Donation from "../pages/Donation";
+import Account from "../pages/AccountCompany";
 
 function Routes() {
   return (
@@ -19,6 +20,7 @@ function Routes() {
       <Route path="/map" isPrivate component={PageMap} />
       <Route path="/donation/ngo/:id" isPrivate component={Donation} />
       <Route exact path="/" isPrivate component={Home} />
+      <Route path="/ngos/account/:id" isPrivate component={Account} />
     </Switch>
   );
 }

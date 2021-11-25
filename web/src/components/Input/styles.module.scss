@@ -1,0 +1,28 @@
+.inputContainer {
+  background-color: #ceb47a;
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%;
+  border: 2px solid #ceb47a;
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: 0;
+    color: #fff;
+    &::placeholder {
+      color: #fff;
+    }
+  }
+
+  & + .inputContainer {
+    margin-top: 8px;
+  }
+
+  svg {
+    margin-right: 16px;
+  }
+}

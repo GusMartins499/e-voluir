@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
 import CompanyItem from "../../components/CompanyItem";
 import NavBar from "../../components/NavBar";
 import Button from "../../components/Button";
-import Select from "../../components/Select2";
-
-import styles from "../../styles/pages/Home.module.scss";
-import api from "../../services/api";
+import Select from "../../components/SelectFilter";
 import { notifyError } from "../../components/Toast";
+
+import styles from "./styles.module.scss";
+
+import api from "../../services/api";
 
 interface ResponseFilter {
   area_atuacao: string;
@@ -37,6 +39,17 @@ const Home: React.FC = () => {
     }
   }
 
+  const options = [
+    { value: "", label: "" },
+    { value: "assistencia_social", label: "Assistência Social" },
+    { value: "educacao", label: "Educação" },
+    { value: "meio_ambiente", label: "Meio Ambiente" },
+    { value: "promocao_voluntariado", label: "Promoção do Voluntariado" },
+    { value: "combate_pobreza", label: "Combate a pobreza" },
+    { value: "protecao_animais", label: "Proteção à animais" },
+    { value: "outro", label: "Outro" },
+  ];
+
   return (
     <>
       <NavBar />
@@ -47,30 +60,19 @@ const Home: React.FC = () => {
             onChange={(event) => setAtuacao(event.target.value)}
             id="area_atuacao"
             label="Área de atuação"
-            options={[
-              { value: "", label: "" },
-              { value: "assistencia_social", label: "Assistência Social" },
-              { value: "educacao", label: "Educação" },
-              { value: "meio_ambiente", label: "Meio Ambiente" },
-              {
-                value: "promocao_voluntariado",
-                label: "Promoção do Voluntariado",
-              },
-              { value: "combate_pobreza", label: "Combate a pobreza" },
-              { value: "protecao_animais", label: "Proteção à animais" },
-              { value: "outro", label: "Outro" },
-            ]}
+            options={options}
           />
         </div>
         <Button onClick={handleListFilter}>Pesquisar</Button>
       </div>
       <div className={styles.container}>
-        {lista.map((item, index) => {
+        {lista.map((item) => {
+          const labelOpcao = options.find((option) => option.value === item.area_atuacao)
           return (
             <CompanyItem
               key={item.id}
               nome_fantasia={item.nome_fantasia}
-              area_atuacao={item.area_atuacao}
+              area_atuacao={String(labelOpcao?.label)}
               bio={item.bio}
               telefone={item.telefone1}
               id={item.id}

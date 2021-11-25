@@ -9,8 +9,8 @@ import * as yup from "yup";
 
 import api from "../../services/api";
 
-import warningIcon from "../../assets/icons/warning.svg";
 import mapIcon from "../../utils/mapIcon";
+import warningIcon from "../../assets/icons/warning.svg";
 
 import styles from "./styles.module.scss";
 
@@ -21,10 +21,29 @@ import Select from "../../components/Select";
 import { notifyError, notifySuccess, notifyWarn } from "../../components/Toast";
 
 import { useLocationUser } from "../../context/UserLocation";
+import { useAuth } from "../../context/auth";
 
-interface SubmitFormData {
-  [key: string]: string;
+interface dataForm {
+  razao_social: string;
+  nome_fantasia: string;
+  inscricao_estadual: string;
+  cnpj: string;
+  cidade: string;
+  endereco: string;
+  bairro: string;
+  complemento: string;
+  cep: string;
+  numero: string;
+  telefone1: string;
+  telefone2: string;
+  email: string;
+  chave_pix: string;
+  bio: string;
+  area_atuacao: string;
+  latitude: string;
+  longitude: string;
 }
+
 yup.setLocale(ptForm);
 const schema = yup.object({
   razao_social: yup.string().required(),
@@ -40,43 +59,79 @@ const schema = yup.object({
   telefone1: yup.string().min(13).max(13).required(),
   telefone2: yup.string().max(13).optional(),
   email: yup.string().email().required(),
-  senha: yup.string().required(),
   chave_pix: yup.string().min(36).max(36).required(),
   bio: yup.string().required(),
   area_atuacao: yup.string().required(),
 });
 
-const SignUpCompany: React.FC = () => {
+const Account: React.FC = () => {
+  const { ngo } = useAuth();
   const history = useHistory();
   const {
     watch,
     handleSubmit,
     register,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
   const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
   const [initialPosition, setInitialPosition] = useState<[number, number]>([
     0, 0,
   ]);
   const watchSelect = watch("area_atuacao", "");
-
   const { latitude, longitude } = useLocationUser();
+  const options = [
+    { value: "assistencia_social", label: "Assistência Social" },
+    { value: "educacao", label: "Educação" },
+    { value: "meio_ambiente", label: "Meio Ambiente" },
+    {
+      value: "promocao_voluntariado",
+      label: "Promoção do Voluntariado",
+    },
+    { value: "combate_pobreza", label: "Combate a pobreza" },
+    { value: "protecao_animais", label: "Proteção à animais" },
+    { value: "outro", label: "Outro" },
+  ];
 
   useEffect(() => {
     setInitialPosition([latitude, longitude]);
   }, [latitude, longitude]);
 
-  function handleMapClick(event: LeafletMouseEvent) {
-    const { lat, lng } = event.latlng;
-    setPosition({
-      latitude: lat,
-      longitude: lng,
+  useEffect(() => {
+    carregarDadosOng()
+  }, []);
+
+  async function carregarDadosOng() {
+    const token = localStorage.getItem("@Evoluir:token");
+    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    const response = await api.get(`/ngos/account/ngo/${ngo?.id}`);
+    console.log('response.data ', response.data)
+    const area_atuacao = options.find((option) => option.value === response.data.area_atuacao);
+    setPosition({ latitude: response.data.latitude, longitude: response.data.longitude })
+    setTimeout(() => {
+      setValue("razao_social", response.data.razao_social);
+      setValue("nome_fantasia", response.data.nome_fantasia);
+      setValue("inscricao_estadual", response.data.inscricao_estadual);
+      setValue("cnpj", response.data.cnpj);
+      setValue("cidade", response.data.cidade);
+      setValue("endereco", response.data.endereco);
+      setValue("bairro", response.data.bairro);
+      setValue("complemento", response.data.complemento);
+      setValue("cep", response.data.cep);
+      setValue("numero", response.data.numero);
+      setValue("telefone1", response.data.telefone1);
+      setValue("telefone2", response.data.telefone2);
+      setValue("email", response.data.email);
+      setValue("chave_pix", response.data.chave_pix);
+      setValue("bio", response.data.bio);
+      setValue("area_atuacao", area_atuacao?.value);
     });
   }
 
-  async function handleSubmitForm(data: SubmitFormData) {
+  async function handleSubmitForm(data: dataForm) {
     const dados = data;
     dados.latitude = String(position.latitude);
     dados.longitude = String(position.longitude);
@@ -86,21 +141,30 @@ const SignUpCompany: React.FC = () => {
       return;
     }
     try {
-      await api.post("/ngos", { dados }).catch((er) => {
+      const token = localStorage.getItem("@Evoluir:token");
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      await api.put(`/ngos/ngo/update/${ngo?.id}`, { dados }).catch((er) => {
         notifyError(`${er.response.data.message}`);
       });
-      notifySuccess("Organização cadastrada com sucesso !");
-      history.push("/login");
+      notifySuccess("Dados alterados com sucesso !");
+      history.push("/");
     } catch (error) {
       notifyError("Entre em contato com o desenvolvedor");
     }
   }
 
+  function handleMapClick(event: LeafletMouseEvent) {
+    const { lat, lng } = event.latlng;
+    setPosition({
+      latitude: lat,
+      longitude: lng,
+    });
+  }
+
   return (
     <div className={styles.container}>
       <Header
-        title="Que incrível que você quer se juntar a plataforma"
-        description="O primeiro passo é preencher esse formulário de inscrição"
+        title="Dados Pessoais"
       />
       <main>
         <form onSubmit={handleSubmit(handleSubmitForm)}>
@@ -117,55 +181,52 @@ const SignUpCompany: React.FC = () => {
               label="Nome fantasia"
               register={register}
             />
-            <p>{errors.nome_fantasia?.message}</p>
+            {/* <p>{errors.nome_fantasia?.message}</p> */}
             <InputForm
               id="inscricao_estadual"
               label="Inscrição estadual"
               register={register}
             />
-            <p>{errors.inscricao_estadual?.message}</p>
+            {/* <p>{errors.inscricao_estadual?.message}</p> */}
             <InputForm id="cnpj" label="CNPJ" register={register} />
-            <p>{errors.cnpj?.message}</p>
+            {/* <p>{errors.cnpj?.message}</p> */}
 
             <InputForm id="cidade" label="Cidade" register={register} />
-            <p>{errors.cidade?.message}</p>
+            {/* <p>{errors.cidade?.message}</p> */}
 
             <InputForm id="endereco" label="Endereço" register={register} />
-            <p>{errors.endereco?.message}</p>
+            {/* <p>{errors.endereco?.message}</p> */}
 
             <InputForm id="bairro" label="Bairro" register={register} />
-            <p>{errors.bairro?.message}</p>
+            {/* <p>{errors.bairro?.message}</p> */}
 
             <InputForm
               id="complemento"
               label="Complemento"
               register={register}
             />
-            <p>{errors.complemento?.message}</p>
+            {/* <p>{errors.complemento?.message}</p> */}
 
             <InputForm id="cep" label="CEP" register={register} />
-            <p>{errors.cep?.message}</p>
+            {/* <p>{errors.cep?.message}</p> */}
 
             <InputForm id="numero" label="Número" register={register} />
-            <p>{errors.numero?.message}</p>
+            {/* <p>{errors.numero?.message}</p> */}
 
             <InputForm id="telefone1" label="Telefone 1" register={register} />
-            {errors.telefone1 && <p> Informe o país + ddd </p>}
+            {/* {errors.telefone1 && <p> Informe o país + ddd </p>}  */}
             <InputForm id="telefone2" label="Telefone 2" register={register} />
-            <p>{errors.telefone2?.message}</p>
+            {/* <p>{errors.telefone2?.message}</p> */}
 
             <InputForm id="email" label="E-mail" register={register} />
-            <p>{errors.email?.message}</p>
-
-            <InputForm type="password" id="senha" label="Senha" register={register} />
-            <p>{errors.senha?.message}</p>
+            {/* <p>{errors.email?.message}</p> */}
 
             <InputForm
               id="chave_pix"
               label="Chave PIX ALEATÓRIA"
               register={register}
             />
-            <p>{errors.chave_pix?.message}</p>
+            {/* <p>{errors.chave_pix?.message}</p> */}
           </fieldset>
 
           <fieldset>
@@ -175,27 +236,17 @@ const SignUpCompany: React.FC = () => {
               label="Informações sobre a organização"
               register={register}
             />
-            <p>{errors.bio?.message}</p>
+            {/* <p>{errors.bio?.message}</p> */}
             <Select
               register={register}
               id="area_atuacao"
               label="Área de atuação"
               value={watchSelect}
-              options={[
-                { value: "assistencia_social", label: "Assistência Social" },
-                { value: "educacao", label: "Educação" },
-                { value: "meio_ambiente", label: "Meio Ambiente" },
-                {
-                  value: "promocao_voluntariado",
-                  label: "Promoção do Voluntariado",
-                },
-                { value: "combate_pobreza", label: "Combate a pobreza" },
-                { value: "protecao_animais", label: "Proteção à animais" },
-                { value: "outro", label: "Outro" },
-              ]}
+              options={options}
             />
-            <p>{errors.area_atuacao?.message}</p>
+            {/* <p>{errors.area_atuacao?.message}</p> */}
           </fieldset>
+
           <fieldset>
             <legend>Localização</legend>
             <Map
@@ -215,7 +266,7 @@ const SignUpCompany: React.FC = () => {
                 />
               )}
             </Map>
-            <p>{errors.latitude?.message}</p>
+            {/* <p>{errors.latitude?.message}</p> */}
           </fieldset>
           <footer>
             <p>
@@ -223,12 +274,12 @@ const SignUpCompany: React.FC = () => {
               Importante ! <br />
               Preencha todos os dados
             </p>
-            <button type="submit">Salvar cadastro</button>
+            <button type="submit">Atualizar Cadastro</button>
           </footer>
         </form>
       </main>
     </div>
   );
-};
+}
 
-export default SignUpCompany;
+export default Account;

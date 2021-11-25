@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
-import { Link } from "react-router-dom";
+
 import mapIcon from "../../utils/mapIcon";
 
 import NavBar from "../../components/NavBar";
 
 import api from "../../services/api";
 
-import styles from "../../styles/pages/Map.module.scss";
+import styles from "./styles.module.scss";
+
 import { useLocationUser } from "../../context/UserLocation";
 
 interface Ngos {

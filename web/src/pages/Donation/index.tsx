@@ -2,18 +2,17 @@ import React, { useEffect, useState } from "react";
 import { FiArrowLeft } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
-import styles from "../../styles/pages/Donation.module.scss";
+import styles from "./styles.module.scss";
 
 import { PIX } from "gpix/dist";
 import HeaderFormCompany from "../../components/HeaderFormCompany";
 import InputForm from "../../components/InputForm";
 
-import DefaultQRCode from "../../assets/qrcode.png";
+import DefaultQRCode from "../../assets/scan.png";
 
 import api from "../../services/api";
+import { notifyError } from "../../components/Toast";
 
 type responseNGO = {
   razao_social: string;
@@ -26,12 +25,6 @@ type responseNGO = {
   cidade: string;
 };
 
-const schema = yup
-  .object({
-    valor: yup.number().positive().required(),
-  })
-  .required();
-
 const Donation: React.FC = () => {
   const { id: UUIDNGO } = useParams<{ id: string }>();
   const [qrcode, setQrcode] = useState<string | null>("");
@@ -41,9 +34,7 @@ const Donation: React.FC = () => {
     handleSubmit,
     register,
     setValue,
-    formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
   });
 
   useEffect(() => {
@@ -53,7 +44,7 @@ const Donation: React.FC = () => {
   async function carregarOng() {
     const token = localStorage.getItem("@Evoluir:token");
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    const response = await api.get<responseNGO>(`/ngos/${UUIDNGO}`);
+    const response = await api.get<responseNGO>(`ngos/account/ngo/${UUIDNGO}`);
     setNgo(response.data);
     setTimeout(() => {
       setValue("razao_social", response.data.razao_social);
@@ -66,12 +57,17 @@ const Donation: React.FC = () => {
   }
 
   async function handleQRCode(data: any) {
+    if (!data.valor) {
+      notifyError("Informe um valor para a doação");
+      return
+    }
+    const valorFormated = data.valor.replace(',','.')
     const pix = PIX.static()
       .setReceiverName(ngo.nome_fantasia)
       .setReceiverCity(ngo.cidade)
       .setKey(ngo.chave_pix)
       .setDescription(`Doação para a ONG ${ngo.nome_fantasia}`)
-      .setAmount(Number(data.valor));
+      .setAmount(Number(valorFormated));
 
     const base64QRcode = await pix.getQRCode();
     setQrcode(base64QRcode);
@@ -111,7 +107,7 @@ const Donation: React.FC = () => {
             />
             <InputForm id="email" label="E-mail" register={register} disabled />
             <InputForm id="valor" label="Valor da doação" register={register} />
-            {errors.valor?.message && <p>Digite um valor válido</p>}
+            
           </fieldset>
           <footer>
             {qrcode ? (
