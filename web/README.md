@@ -12,6 +12,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [TypeScript](https://www.typescriptlang.org/)
 - [SASS](https://sass-lang.com/)
 - [React](https://reactjs.org/)
+- [Leaflet](https://react-leaflet.js.org/en/)
+- [React Leaflet](https://react-leaflet.js.org/)
 - [MapBox](https://www.mapbox.com/)
 
 ## 🚀 Frontend
