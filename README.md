@@ -8,7 +8,7 @@
 </p>
 
 <h1 align="center">
-    <img alt="E-voluir" title="#E-voluir" src="./assets/logo-grande.png" />
+    <img alt="E-voluir" title="#E-voluir" src="./web/src/assets/logo-grande.png" />
 </h1>
 
 <h4 align="center"> 
@@ -54,9 +54,9 @@ Projeto desenvolvido para o trabalho de conclusão de curso - TCC
 ### Web
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="E-voluir" title="#E-voluir" src="./assets/pagina-login.png" width="400px">
-  <img alt="E-voluir" title="#E-voluir" src="./assets/pagina-home.png" width="400px">
-  <img alt="E-voluir" title="#E-voluir" src="./assets/pagina-mapa.png" width="400px">
+  <img alt="E-voluir" title="#E-voluir" src="./web/src/assets/pagina-login.png" width="400px">
+  <img alt="E-voluir" title="#E-voluir" src="./web/src/assets/pagina-home.png" width="400px">
+  <img alt="E-voluir" title="#E-voluir" src="./web/src/assets/pagina-mapa.png" width="400px">
 </p>
 
 ---
