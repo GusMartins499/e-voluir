@@ -1,10 +1,10 @@
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Gusmartins499/e-voluir?color=4e8b91">
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/Gusmartins499/e-voluir?color=4e8b91">
-  <img alt="License" src="https://img.shields.io/github/license/Gusmartins499/e-voluir?color=4e8b91">
-  <a href="https://twitter.com/gusmartins994">
-    <img alt="Siga no Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fgusmartins994">
-  </a>
+	<img alt="GitHub language count" src="https://img.shields.io/github/languages/count/Gusmartins499/e-voluir?color=4e8b91">
+	<img alt="Repository size" src="https://img.shields.io/github/repo-size/Gusmartins499/e-voluir?color=4e8b91">
+  	<img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=4e8b91&">
+	<a href="https://twitter.com/gusmartins994">
+		<img alt="Siga no Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2Fgusmartins994">
+ 	</a>
 </p>
 
 <h1 align="center">
