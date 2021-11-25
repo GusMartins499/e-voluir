@@ -1,0 +1,283 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2021-11-25T11:54:39.390Z",
+  "__export_source": "insomnia.desktop.app:v2021.5.3",
+  "resources": [
+    {
+      "_id": "req_e2af9e8b36ff4ccd869457153600e323",
+      "parentId": "fld_afa2063c5db04191b4f15034944cc2ee",
+      "modified": 1637836094837,
+      "created": 1635344903736,
+      "url": "{{ _.baseURL }}/session",
+      "name": "auth",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"emailong2@gmail.com\",\n\t\"password\": \"123456789\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_65f876c9fc6748599f574155c1a2991e"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1635344903737,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_afa2063c5db04191b4f15034944cc2ee",
+      "parentId": "wrk_aabe380e1f63492b8c0d29a69bafb970",
+      "modified": 1635512745106,
+      "created": 1635512745106,
+      "name": "Sessions",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1635512745106,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_aabe380e1f63492b8c0d29a69bafb970",
+      "parentId": null,
+      "modified": 1635427353025,
+      "created": 1635258164005,
+      "name": "e-voluir",
+      "description": "tcc",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_ae101dedc9b741f5bd0969386cc0de68",
+      "parentId": "fld_9a9f33793c304b66b7a15991a6e9bcde",
+      "modified": 1637107647523,
+      "created": 1635512412211,
+      "url": "{{ _.baseURL }}/users",
+      "name": "Create User",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Gustavo\",\n\t\"email\": \"gustavosm994@gmail.com\",\n\t\"password\": \"123456789\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_df869d738a8541109b1ef8680cda11a2"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1635512412211,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_9a9f33793c304b66b7a15991a6e9bcde",
+      "parentId": "wrk_aabe380e1f63492b8c0d29a69bafb970",
+      "modified": 1635512401824,
+      "created": 1635512401824,
+      "name": "Users",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1635512401824,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_55dba92b8f814906b8011bcb2667e977",
+      "parentId": "fld_dc8690eadc7c4863b0805f3eafc732e2",
+      "modified": 1637192962737,
+      "created": 1637192556361,
+      "url": "{{ _.baseURL }}/ngos/ngo/update/1b57d623-9d3e-40b3-9483-655080dddc74",
+      "name": "Update",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"dados\": {\n\t\t\"razao_social\": \"Razão Social ONG 3\",\n\t\t\"nome_fantasia\": \"Nome Fantasia ONG 3\",\n\t\t\"inscricao_estadual\": \"369852147\",\n\t\t\"cnpj\": \"55487120000178\",\n\t\t\"endereco\": \"Rua dos Bobos2\",\n\t\t\"cidade\": \"Porto\",\n\t\t\"bairro\": \"Mãe Joana\",\n\t\t\"complemento\": \"\",\n\t\t\"cep\": \"88790000\",\n\t\t\"numero\": \"69\",\n\t\t\"telefone1\": \"36442345\",\n\t\t\"telefone2\": \"\",\n\t\t\"email\": \"emailong2@gmail.com\",\n\t\t\"senha\": \"123456789\",\n\t\t\"chave_pix\": \"992821e8-155d-4633-8e00-4261041d35dc\",\n\t\t\"bio\": \"Sou a segunda ONG a se cadastrar na plataforma\",\n\t\t\"area_atuacao\": \"protecao_animal\",\n\t\t\"latitude\": \"41.1429465\",\n\t\t\"longitude\": \"-8.6111222\"\n\t\t}\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_a99a7992365f489b915a472eb137d534"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzcxOTI3MzMsImV4cCI6MTYzNzI3OTEzMywic3ViIjoiMWI1N2Q2MjMtOWQzZS00MGIzLTk0ODMtNjU1MDgwZGRkYzc0In0.LD03lONTNsBB92ksrQZfz4wnXDdbhQTQnmLVuxuWpVc"
+      },
+      "metaSortKey": -1637192556361,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_dc8690eadc7c4863b0805f3eafc732e2",
+      "parentId": "wrk_aabe380e1f63492b8c0d29a69bafb970",
+      "modified": 1635512754755,
+      "created": 1635427414416,
+      "name": "ONGs",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1635427414416,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_5ced8c0c11af468aa66cacf45f243140",
+      "parentId": "fld_dc8690eadc7c4863b0805f3eafc732e2",
+      "modified": 1637195480024,
+      "created": 1635521079717,
+      "url": "{{ _.baseURL }}/ngos/account/ngo/1dbb8f34-e96c-4e02-ab90-4d0d613dcd06",
+      "name": "NGO",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MzcxNzgyMjcsImV4cCI6MTYzNzI2NDYyNywic3ViIjoiMWRiYjhmMzQtZTk2Yy00ZTAyLWFiOTAtNGQwZDYxM2RjZDA2In0.WBBx7-HgLrGrbm_pjmZphGf6dCGNSpZrYf9gf2q3Pz8"
+      },
+      "metaSortKey": -1635521079717,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_45976f227a16476d8679d6dfdebe7d7f",
+      "parentId": "fld_dc8690eadc7c4863b0805f3eafc732e2",
+      "modified": 1637835804056,
+      "created": 1635258176247,
+      "url": "{{ _.baseURL }}/ngos/filter",
+      "name": "All",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_ed9bfc19b69c4482afdc9f3e71f80915",
+          "name": "atuacao",
+          "value": "",
+          "description": "",
+          "disabled": false
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Mzc4MzU3OTIsImV4cCI6MTYzNzkyMjE5Miwic3ViIjoiMDIyNzdlMTktNGU0YS00ZGZhLWE0ZjYtM2NhOTEwNWUwYzg1In0.ovN4i8-VaK7LIGrAk2F7qjYD2yQFIbHjeudXbrzBwmM"
+      },
+      "metaSortKey": -1635427409804,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_21ec463b431e4c478b31efb2b78330fb",
+      "parentId": "fld_dc8690eadc7c4863b0805f3eafc732e2",
+      "modified": 1637192717941,
+      "created": 1635427409754,
+      "url": "{{ _.baseURL }}/ngos/",
+      "name": "Create NGO",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"dados\": {\n\t\t\"razao_social\": \"Razão Social ONG 2\",\n\t\t\"nome_fantasia\": \"Nome Fantasia ONG 2\",\n\t\t\"inscricao_estadual\": \"369852147\",\n\t\t\"cnpj\": \"55487120000178\",\n\t\t\"endereco\": \"Rua dos Bobos\",\n\t\t\"cidade\": \"Porto\",\n\t\t\"bairro\": \"Mãe Joana\",\n\t\t\"complemento\": \"\",\n\t\t\"cep\": \"88790000\",\n\t\t\"numero\": \"69\",\n\t\t\"telefone1\": \"36442345\",\n\t\t\"telefone2\": \"\",\n\t\t\"email\": \"emailong2@gmail.com\",\n\t\t\"senha\": \"123456789\",\n\t\t\"chave_pix\": \"992821e8-155d-4633-8e00-4261041d35dc\",\n\t\t\"bio\": \"Sou a segunda ONG a se cadastrar na plataforma\",\n\t\t\"area_atuacao\": \"protecao_animal\",\n\t\t\"latitude\": \"41.1429465\",\n\t\t\"longitude\": \"-8.6111222\"\n\t\t}\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_8d61d8f2d48b4a9695237366168eb931"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1635427409754,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_c36eaa00e1d133eea1dc8a19a4e09707d2ab2b24",
+      "parentId": "wrk_aabe380e1f63492b8c0d29a69bafb970",
+      "modified": 1635258221258,
+      "created": 1635258164018,
+      "name": "Base Environment",
+      "data": {
+        "baseURL": "http://localhost:3333"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "baseURL"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1635258164019,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_c36eaa00e1d133eea1dc8a19a4e09707d2ab2b24",
+      "parentId": "wrk_aabe380e1f63492b8c0d29a69bafb970",
+      "modified": 1635258164022,
+      "created": 1635258164022,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_4b4bbca0dda74e22b5294e499c509012",
+      "parentId": "wrk_aabe380e1f63492b8c0d29a69bafb970",
+      "modified": 1635258164007,
+      "created": 1635258164007,
+      "fileName": "My Collection",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    }
+  ]
+}
